@@ -2,7 +2,7 @@ FROM pipill/armhf-alpine
 
 ENV SS_VER=2.5.6
 ENV SS_URL=https://github.com/shadowsocks/shadowsocks-libev/archive/v$SS_VER.tar.gz
-
+RUN [ "cross-build-start" ]
 RUN set -ex && \
     apk add --no-cache --virtual .build-deps \
                                 autoconf \
@@ -38,7 +38,7 @@ RUN set -ex && \
 RUN apk --update --no-cache add coreutils bash util-linux procps hostapd iproute2 iw dnsmasq iptables ipset haveged curl \
   && sed -i 's/${IFNAME:+-i $IFNAME} //g' /usr/bin/ss-nat \
   && curl 'http://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest' | grep ipv4 | grep CN | awk -F\| '{ printf("%s/%d\n", $4, 32-log($5)/log(2)) }' > /chnroute.txt
-
+RUN [ "cross-build-end" ]
 #VOLUME ["/chnroute.txt"]
 
 ENV AP_WIFI_IFACE=wlan0 \
