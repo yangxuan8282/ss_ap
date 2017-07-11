@@ -2,6 +2,8 @@ version: "2"
 
 services:
   ss_ap:
+    #for amd64:
+    #image: yangxuan8282/ss_ap:amd64
     image: yangxuan8282/ss_ap
     restart: unless-stopped
     privileged: true
